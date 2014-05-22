@@ -1,0 +1,345 @@
+<!DOCTYPE html> 
+<html><head>
+
+<meta charset="utf-8">
+<title>Ejemplo Practica 1 Móvil</title>
+<link rel= " stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css ">
+<script src= " http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src= " http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js "> </script>
+
+<style type="text/css">
+    #outerCircleText {
+        font-style:oblique;
+        font-weight: bold;
+        font-family: 'verdana', arial;
+        color:#63F;
+    position: absolute;top: 0;left: 0;z-index: 3000;cursor: default;}
+    #outerCircleText div {position: relative;}
+    #outerCircleText div div {position: absolute;top: 0;left: 0;text-align: center;}
+</style>
+
+
+<script type="text/javascript">
+
+;(function(){
+
+var msg = "Vamos!!"; //aki cambien el texto, este sera el que siga al raton
+
+var size = 20;//tamaño de la letra
+var circleY = 0.75; var circleX = 3;
+var letter_spacing = 5;
+var diameter = 5;
+var rotation = 0.1;
+var speed = 0.1;
+
+if (!window.addEventListener && !window.attachEvent || !document.createElement) return;
+
+msg = msg.split('');
+var n = msg.length - 1, a = Math.round(size * diameter * 0.408333), currStep = 20,
+ymouse = a * circleY + 20, xmouse = a * circleX + 20, y = [], x = [], Y = [], X = [],
+o = document.createElement('div'), oi = document.createElement('div'),
+b = document.compatMode && document.compatMode != "BackCompat"? document.documentElement : document.body,
+
+mouse = function(e){
+ e = e || window.event;
+ ymouse = !isNaN(e.pageY)? e.pageY : e.clientY; // y-position
+ xmouse = !isNaN(e.pageX)? e.pageX : e.clientX; // x-position
+},
+
+makecircle = function(){
+ if(init.nopy){
+  o.style.top = (b || document.body).scrollTop + 'px';
+  o.style.left = (b || document.body).scrollLeft + 'px';
+ };
+ currStep -= rotation;
+ for (var d, i = n; i > -1; --i){
+  d = document.getElementById('iemsg' + i).style;
+  d.top = Math.round(y[i] + a * Math.sin((currStep + i) / letter_spacing) * circleY - 15) + 'px';
+  d.left = Math.round(x[i] + a * Math.cos((currStep + i) / letter_spacing) * circleX) + 'px';
+ };
+},
+
+drag = function(){
+ y[0] = Y[0] += (ymouse - Y[0]) * speed;
+ x[0] = X[0] += (xmouse - 20 - X[0]) * speed;
+ for (var i = n; i > 0; --i){
+  y[i] = Y[i] += (y[i-1] - Y[i]) * speed;
+  x[i] = X[i] += (x[i-1] - X[i]) * speed;
+ };
+ makecircle();
+},
+
+init = function(){
+ if(!isNaN(window.pageYOffset)){
+  ymouse += window.pageYOffset;
+  xmouse += window.pageXOffset;
+ } else init.nopy = true;
+ for (var d, i = n; i > -1; --i){
+  d = document.createElement('div'); d.id = 'iemsg' + i;
+  d.style.height = d.style.width = a + 'px';
+  d.appendChild(document.createTextNode(msg[i]));
+  oi.appendChild(d); y[i] = x[i] = Y[i] = X[i] = 0;
+ };
+ o.appendChild(oi); document.body.appendChild(o);
+ setInterval(drag, 25);
+},
+ascroll = function(){
+ ymouse += window.pageYOffset;
+ xmouse += window.pageXOffset;
+ window.removeEventListener('scroll', ascroll, false);
+};
+o.id = 'outerCircleText'; o.style.fontSize = size + 'px';
+if (window.addEventListener){
+ window.addEventListener('load', init, false);
+ document.addEventListener('mouseover', mouse, false);
+ document.addEventListener('mousemove', mouse, false);
+  if (/Apple/.test(navigator.vendor))
+   window.addEventListener('scroll', ascroll, false);
+}
+else if (window.attachEvent){
+ window.attachEvent('onload', init);
+ document.attachEvent('onmousemove', mouse);
+};
+})();
+</script>
+
+</head> 
+<body>
+
+<div data-role="page" id="principal" data-theme="b">
+	<div data-role="header">
+    
+		<h1 style="color:#63F">Rock</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+     <li><a href="#Skid Row" data-transition="slide" data-icon="home"> <img src="Imagenes/Skid_Row_18_and_Life.jpg" width="298" height="269"> Skid Row</a>    </li>
+    <li><a href="#Black Label Society" data-transition="fade" data-icon="alert"><img src="Imagenes/Zakk+Wylde+zwd.jpg" width="407" height="280">Black Label Society</a></li>
+    <li><a href="#Iron Maiden" data-transition="flip" data-icon="info"><img src="Imagenes/Trooper.jpg" width="263" height="266">Iron Maiden</a> </li>
+		</ul>		
+	</div>
+
+         <a href="#myguns" data-rel="popup" data-position-to="window">
+         <img src="Imagenes/560170_341017365999208_2087875053_n.png" alt="Skaret View" style="width:100px;"></a>
+         <div data-role="popup" id="myguns">
+         <p>Guns And Roses ZOOM!!!!!!</p>
+         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a><img src="Imagenes/560170_341017365999208_2087875053_n.png" style="width:10000px;height:10000px;" alt="Skaret Viev">
+         </div>
+         <br>
+         <br>
+         <br>
+         <h1 style="color:#63F" align="center">Historia del rock<h1>
+<h4>El rock es un género musical surgido en Estados Unidos en la década de 1950, que evolucionó hacia una variedad de estilos a partir de la década siguiente , popularizándose rápidamente por gran parte del mundo. 
+Su forma originaria, conocida como «rock and roll», surgió mayormente de la combinación de dos géneros anteriores como eran el rhythm and blues y el country.
+ La música rock también se nutrió fuertemente del blues y elfolk, e incorporó influencias del jazz, la música clásica y otras fuentes.
+<br>
+Musicalmente, el rock se ha centrado sobre la guitarra eléctrica, normalmente como parte de un grupo de rock con cantante, bajo, batería y, algunas veces, instrumentos de teclado como el órgano y el piano. Típicamente, el rock es una música centrada en las canciones, habitualmente con compás de 4/4 y usando una estructura verso-estribillo, pero el género se ha vuelto extremadamente diverso y las características musicales comunes son difíciles de definir.
+ Como la música pop, las letras se centran a menudo en el amor romántico, pero también tratan un rango amplio de otros temas con un enfoque frecuente en lo social y lo político.El dominio del rock por músicos varones ha sido visto como uno de los factores principales que definen los temas explorados en la música rock. 
+ El rock pone más énfasis en la composición, la actuación en vivo, y la autenticidad que la música pop.
+A finales de la década de 1960, referida como la “era dorada” o el periodo del “Rock clásico”, un número de subgéneros distintivos del Rock ha aparecido, híbridos como el Blues Rock, Folk Rock, Country Rock, y el Jazz Rock fusión, muchos de los cuales contribuyeron al desarrollo del Rock Psicodélico influenciado por la escena psicodélica contra-cultural. Los nuevos géneros que emergieron de esta escena incluyen el Rock Progresivo, el cual extendió los elementos artísticos; el Glam Rock, el cual resaltó el espectáculo en vivo y el estilo visual; y el subgénero mayor, diverso y longevo que es el Heavy Metal, el cual se centraba en el volumen, el poder y la velocidad.
+<br> 
+En la segunda mitad de los años 1970, el Punkintensifico y reaccionó contra algunas de estas tendencias para producir una música cruda y energética. El Punk fue una influencia en la década de 1980 en el desarrollo subsecuente de otros subgéneros, incluyendo el New Wave, el Post-Punk y eventualmente el movimiento del Rock Alternativo. 
+Desde la década de 1990, el Rock Alternativo comenzó a dominar el género y saltó a la fama en las formas de Grunge, Britpop e Indie Rock. 
+Desde entonces han aparecido otros subgéneros de fusión, como el Pop Punk, Rap Rock y Nu Metal, así como intentos conscientes de recordar la historia del Rock, incluyendo la restauración de principios del nuevo milenio del Garage Rock, el Post-Punk y el Synthpop.
+<br>
+La música Rock también abarcó y sirvió de vehículo para los movimientos culturales y sociales, llevando a la creación de subculturas importantes incluyendo los Mods y los Rockers en el Reino Unido, y la contracultura hippie que se propagó en San Francisco (Estados Unidos) en la década de 1960. De forma similar, la cultura Punk de la década de 1970 originó las subculturas visualmente distintivas Emo y Gótico. 
+Heredando la tradición folclórica de la Canción de Protesta, la música Rock ha sido asociada con el activismo político así como los cambios en las actitudes sociales sobre el racismo, el sexo y el uso de drogas, y es usualmente vista como una expresión de la rebelión juvenil contra el consumismo y conformismo de la población adulta.
+</h4>
+<br>
+
+<a href="#mypop" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all"> E-mail </a> 
+<div data-role="popup" id="mypop">
+<p> gatita_baez97@hotmail.com </p>
+</div>
+<div data-role="content">
+<div data-role="collapsible-set"> 
+<div data-role="collapsible" data-collapsed="true">
+<h1> Da click aqui! </h1><br>
+<a href="#myimg" data-rel="popup" data-position="window">
+<img src="Imagenes/574915_489992124376695_299942247_n.jpg" alt="Skaret View" style="width:100px"></a>
+<div data-role="popup" id="myimg">
+<p>--Yo se que querias darle click.--</p>
+<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-rigth">Close</a><img src="Imagenes/574915_489992124376695_299942247_n.jpg" style="width:800px;height:500px" alt="Skaret View">
+</div>
+</div>
+</div>
+
+	<div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="top">
+    <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="star">CONTACTO</a> </li>
+    </ul>
+    </div>
+	</div>
+
+    </div>
+</div>
+
+<div data-role="page" id="Skid Row"  data-theme="b">
+	<div data-role="header">
+    <a data-role="button" data-rel="back" data-direction="reverse" data-icon="back">Come Back</a>
+		<h1 style="color:#F00">Skid Row</h1>
+	</div>
+	<div data-role="content">
+<center><img src="Imagenes/Skid Row.jpg" width="642" height="510"></center>
+	</div>
+    <br>
+    <h2 style="color:#F00">Skid Row</h2>
+    <br>
+Skid Row es una banda de heavy metal estadounidense fundada en 1986 por el bajista Rachel Bolan y el guitarrista Dave "The Snake" Sabo en Toms River, Nueva Jersey. Para completar su formación, tras sufrir varios cambios, Bolan y Sabo reclutaron al guitarrista Scotti Hill, al baterista Rob Affuso y por último al vocalista Sebastian Bach. Skid Row alcanzó la fama con su álbum debut, llamado de manera homónima y que alcanzó la sexta posición en el Billboard 200.
+Cabe señalar que el nombre de la banda fue tomada de la banda irlandesa Skid Row, de donde pertenecía el guitarrista Gary Moore, quien cobró 35 mil dólares por concepto de derechos de autor y a quien al momento de firmar con Atlantic Records los estadounidenses pagaron esa cifra para su uso.
+<br>
+<h2>Primeros años </h2>
+La agrupación se formó en 1986 en Toms River, Nueva Jersey. Su formación inicial consistía en Matt Fallon (voz), Dave "The Snake" Sabo, Scotti Hill (guitarras), Rachel Bolan (bajo) y Rob Affuso (batería). Más tarde se uniría a la agrupación el vocalista Sebastian Bach, reemplazando a Fallon. La banda empezó tocando en clubes en el Este de los Estados Unidos. Asistido por su amigo Jon Bon Jovi, Sabo aseguró un contrato para Skid Row con la productora Atlantic Records en 1988, cuando entraron al estudio con Michael Wagener (productor de Ozzy Osbourne, White Lion y Extreme, entre otros) para grabar su primer disco.
+Skid Row, lanzado en enero de 1989, fue un éxito instantáneo. Produjo los reconocidos singles «18 and Life», «I Remember You», y «Youth Gone Wild». La banda se vio envuelta también en algunos incidentes, entre ellos la disputa legal por regalías al mencionado Jon Bon Jovi y al guitarrista Richie Sambora. A pesar de las peleas legales con Bon Jovi, el disco fue el más vendido de Skid Row con 5 millones de copias solo en Estados Unidos, siguiendo el prototipo de las bandas de glam metal de la época, aunque con un sonido ligeramente más pesado.
+<br>
+	<div data-role="footer" data-position="fixed">
+			<div data-role="navbar" data-iconpos="top">
+    <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="star">CONTACTO</a> </li>
+    </ul>
+    </div>
+	</div>
+</div>
+
+<div data-role="page" id="Black Label Society"  data-theme="b">
+	<div data-role="header">
+        <a data-role="button" data-rel="back" data-direction="reverse" data-icon="back">Come Back</a>
+		<h1 style="color:#0CC">Black Label Society</h1>
+	</div>
+	<div data-role="content">
+       <center> <img src="Imagenes/flam-black-label-society-muzic-world-com-204434.jpg" width="614" height="448"> </center>
+       <br>
+      <h4 style="color:#0CC"> Black Label Society</h4>
+      <br>
+      Black Label Society es una banda norteamericana de heavy metal formada por el guitarrista Zakk Wylde en 1998, la banda ha editado nueve álbumes de estudio.
+      
+  A principios de los noventa, Wylde formaba parte de la banda Pride & Glory, después de un año y un solo álbum la banda se disolvió en 1994. Wylde editaría un álbum solista acústico Book of Shadows en 1996. Tras el poco éxito del álbum en solitario, Wylde y el baterista Phil Ondich grabarían lo que posteriormente sería el álbum debut de Black Label Society Sonic Brew junto con el guitarrista Nick Catanese y el bajista John DeServio. Sonic Brew fue grabado en Japón en octubre de 1998, salió a la venta en mayo de 1999.
+  
+	</div>
+	<div data-role="footer"  data-position="fixed">
+			<div data-role="navbar" data-iconpos="top">
+    <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="star">CONTACTO</a> </li>
+    </ul>
+    </div>
+	</div>
+</div>
+
+<div data-role="page" id="Iron Maiden"  data-theme="b">
+	<div data-role="header">
+          <a data-role="button" data-rel="back" data-direction="reverse" data-icon="back">Come Back</a>
+		<h1 style="color:#03F">Iron Maiden</h1>
+	</div>
+	<div data-role="content">	
+       <center> <img src="Imagenes/Maiden.jpg" width="579" height="405"> </center>
+       <br>
+       <h3 style="color:#03F">Iron Maiden</h3>
+       <br>
+       Iron Maiden es una banda británica de heavy metal fundada en 1975 por el bajista Steve Harris. Es considerada una de las bandas de heavy metal más importantes de todos los tiempos. Ha vendido más de 100 millones de discos en todo el mundo, a pesar de haber contado con poco apoyo de la radio y la televisión comercial durante la mayor parte de su carrera. Sin embargo, la banda basó su éxito en llegar directamente a los aficionados, grabando discos de alta calidad y realizando actuaciones al vivo consideradas de las mejores del género.
+Iron Maiden ganó el Premio Ivor Novello para el logro internacional en 2002, y fueron incluidos en el Hollywood's RockWalk en Sunset Boulevard, Los Ángeles, en 2005. Para agosto de 2011, la banda ha tenido casi 2.000 presentaciones en vivo a lo largo de su carrera. También en 2009 fue ganadora del premio Mejor Performance en Vivo en los BRIT Awards, la más importante premiación musical del Reino Unido.
+Durante sus más de 30 años de trayectoria, Iron Maiden ha sido identificada gráficamente por su famosa mascota "Eddie the Head", quien ha aparecido en todas las portadas de sus álbumes y en casi todos sus singles, así como en sus presentaciones en vivo.
+Tras varias audiciones y varios cambios en su formación, ésta finalmente se consolidó con el vocalista Paul Di'Anno, los guitarristas Dave Murray y Dennis Stratton y el baterista Clive Burr, siempre bajo el liderazgo del bajista Steve Harris. Tras varias giras por todo el Reino Unido lanzan su primer EP llamado The Soundhouse Tapes en 1979 y ya en 1980 su álbum debut homónimo en 1980 el cual llegó al número cuatro de las lista británicas sin mediar promoción masiva alguna. Más tarde ese mismo año, Stratton fue reemplazado por el guitarrista Adrian Smith, con el que publicaron el exitoso y consistente Killers (1981).1 Luego, el cantante Bruce Dickinson entró a reemplazar a Di'Anno para el álbum The Number of the Beast de 1982, marcando el inicio de una serie de lanzamientos de impacto, entrando en lo más alto en las listas del Reino unido.2 . Para el año 1983 la banda lanzó el álbum Piece of Mind, que contaba como novedad con la salida del baterista Clive Burr y el ingreso de Nicko McBrain en su reemplazo. A partir de allí se consolidó la alineación más estable y exitosa que ha tenido la agrupación, la cual dio para numerosas giras y álbumes. Iron Maiden ha grabado 15 álbumes de estudio.
+	</div>
+	<div data-role="footer"  data-position="fixed">
+			<div data-role="navbar" data-iconpos="top">
+    <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="star">CONTACTO</a> </li>
+    </ul>
+    </div>
+	</div>
+</div>
+
+<div data-role="page" id="Ayuda"  data-theme="b">
+	<div data-role="header">
+
+          <a data-role="button" data-rel="back" data-direction="reverse" data-icon="back">Come Back</a>
+	</div>
+	<div data-role="content">	
+    <center><p><h1>¿Ayuda?</h1></p></center>
+       <center> <img src="Imagenes/1170962_622234521172985_2020373453_n.jpg"> </center>
+	</div>
+    <h3 align="center">Áqui en esta pagina web No hay ningún problema NO TE PUEDES PERDER!! Eres un flojo xDD<h3>
+	<div data-role="footer"  data-position="fixed">
+			<div data-role="navbar" data-iconpos="top">
+                <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="star">CONTACTO</a> </li>
+    </ul>
+            
+    		</div>
+	</div>
+</div>
+
+<div data-role="page" id="Contacto"  data-theme="b"
+>
+	<div data-role="header">
+          <a data-role="button" data-rel="back" data-direction="reverse" data-icon="back">Come Back</a>
+	</div>
+    <h3 align="center">Información de contacto</h3>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <table width="300" border= "2" align="center">
+<tr>
+<td align="center">Nombre</td>
+<td align="center">Itzamara Osorio Baéz</td>
+</tr>
+<tr>
+<td align="center">Dirección</td>
+<td align="center">3 poniente y 5 sur #6</td>
+</tr>
+<tr>
+<td align="center">Grado</td>
+<td align="center">4°</td>
+</tr>
+<tr>
+<td align="center">Grupo</td>
+<td  align="center">"A"</td>
+</tr>
+<tr>
+<td align="center">Escuela</td>
+<td align="center">CBTis 257 "Ricardo Flores Magon"</td>
+</tr>
+<tr>
+<td align="center">E-mail</td>
+<td align="center">gatita_baez97@hotmail.com</td>
+</tr>
+
+<tr>
+<td align="center"><img src="Imagenes/560715_485658314810076_701766543_n.jpg" height="236"></td>
+<td align="center"><img src="Imagenes/1227451556779_f.jpg" height="236"></td>
+</tr>
+</table>
+	<div data-role="content">	
+      <center> <img src=""> </center>
+	</div>
+	<div data-role="footer"  data-position="fixed">
+			<div data-role="navbar" data-iconpos="top">
+                <ul>
+     <li><a href="#principal" data-transition="slide" data-icon="home">INICIO</a>    </li>
+    <li><a href="#Ayuda" data-transition="fade" data-icon="alert">AYUDA</a>    </li>
+    <li><a href="#Contacto" data-transition="flip" data-icon="info">CONTACTO</a> </li>
+    </ul>
+    		</div>
+	</div>
+</div>
+
+</body>
+</html>
